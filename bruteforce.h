@@ -7,14 +7,13 @@ mainset- array of the main set
 subsets- array of all subsets
 current_solution- indexes of which subsets r used in the solution
 */
-#include <stdio.h>
 
 int solve_brute(int current_state[], int num_main, int num_subsets, int num_items, int mainset[], int subsets[num_subsets][num_items], int current_solution[num_subsets]) {
 
     //check if we did everything
     int total_covered = 0;
     for (int i = 0; i < num_main; i++) total_covered += current_state[i];
-    if (total_covered == num_main) return 0; // finished solve_brute
+    if (total_covered == num_main) return 0; //finished solve_brute
 
     //find next thing to cover
     int target_index = -1;
@@ -26,13 +25,13 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
     }
     int target_value = mainset[target_index];
     int best_count = 9999;
-
     int temp_solution[num_subsets];
 
     //try every subset to find what to add next
     for (int i = 0; i < num_subsets; i++) {
         int has_element = 0;
         int has_overlap = 0;
+        //get a subset that we can use
         for (int j = 0; j < num_main; j++) {
             //check if it has what were looking for
             int val = subsets[i][j];
@@ -48,6 +47,7 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
             //cannot use this iteration
             if (has_overlap == 1) break;
         }
+        //we found a subset we can use
         //update which one is added and run again to find next one to add
         if (has_overlap == 0 && has_element == 1){
             //create new state by copying current one so far
@@ -56,42 +56,31 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
                 next_state[j] = current_state[j];
             }
 
-            //mark the elements in the subset as covered
+            //mark the elements from the new subset as covered
             for (int j = 0; subsets[i][j] != -1; j++) {
                 int val = subsets[i][j];
                 for (int k = 0; k < num_main; k++) {
                     if (mainset[k] == val) next_state[k] = 1;
                 }
             }
-            //temp_solution[i] = 1;
+            //get another subset to use, and so on until we reach exact cover (yung return 0 sa pinaka top)
+            //or if we reach a no solution (best_count is still 9999 and is returned)
             int current = solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets, temp_solution);
+            //check if a sol was found
             if (current != 9999) {
+                //check if better than current solution
                 if (1 + current < best_count) {
                     best_count = 1 + current;
                     
-                    // Store current index first
+                    //store current subset first
                     current_solution[0] = i; 
-                    // Copy the branch results into the current solution
+                    //copy the rest of the subsets
                     for (int p = 0; p < current; p++) {
                         current_solution[p + 1] = temp_solution[p];
                     }
                 }
             }
-            
-            // if (current < best_count) {
-            //     best_count = current;
-            // }
-            // current_solution[i] = 1; 
-            // for (int j = 0; j < current; j++) {
-            //     current_solution[j] = temp_solution[j];
-            // }
-            // temp_solution[i] = 0;
         }
     }
-    // int checker = 0;
-    // for (int i = 0; i < num_main; i++){
-    //     if (current_state[i] == 0) checker++;
-    // }
-    // if (checker != num_main) return 9999; // no solution
     return best_count;
 }

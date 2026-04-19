@@ -23,6 +23,8 @@ int main() {
     printf("Time taken (brute force): %f seconds\n", ((double)time_bruteforce) / CLOCKS_PER_SEC);
     print_sol(result_brute, bruteforce_state);
 
+
+    
     //GET TIME FOR DYNAMIC PROGRAMMING
     time_dynamic = clock();
     result_dynamic = solve_dynamic(dynamic_state, mainset_count, subset_count, item_count, mainset, subsets, dynamic_selected);
