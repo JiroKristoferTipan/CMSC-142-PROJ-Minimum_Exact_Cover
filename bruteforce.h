@@ -1,20 +1,20 @@
-int solve_brute(int current_state[], int num_main, int num_subsets, int num_items, int mainset[], int subsets[num_subsets][num_items]) {
-    //current_state- array where 1 means elements exists and 0 doesnt, for checking which elements are covered
-    //num_main- ilan elements sa mainset meron
-    //num_subsets- ilan subsets meron
-    //num_items- ilan items meron in each subset
-    //mainset- array of the main set
-    //subsets- array of all subsets
+/*
+current_state- array where 1 means elements exists and 0 doesnt, for checking which elements are covered
+num_main- ilan elements sa mainset meron
+num_subsets- ilan subsets meron
+num_items- ilan items meron in each subset
+mainset- array of the main set
+subsets- array of all subsets
+current_solution- indexes of which subsets r used in the solution
+*/
+#include <stdio.h>
+
+int solve_brute(int current_state[], int num_main, int num_subsets, int num_items, int mainset[], int subsets[num_subsets][num_items], int current_solution[num_subsets]) {
 
     //check if we did everything
     int total_covered = 0;
-    for (int i = 0; i < num_main; i++) {
-        total_covered += current_state[i];
-    }
-    
-    if (total_covered == num_main) {
-        return 0; // finished solve_brute
-    }
+    for (int i = 0; i < num_main; i++) total_covered += current_state[i];
+    if (total_covered == num_main) return 0; // finished solve_brute
 
     //find next thing to cover
     int target_index = -1;
@@ -27,16 +27,16 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
     int target_value = mainset[target_index];
     int best_count = 9999;
 
+    int temp_solution[num_subsets];
+
     //try every subset to find what to add next
     for (int i = 0; i < num_subsets; i++) {
         int has_element = 0;
         int has_overlap = 0;
         for (int j = 0; j < num_main; j++) {
-            int val = subsets[i][j];
             //check if it has what were looking for
-            if (val == target_value) {
-                has_element = 1;
-            }
+            int val = subsets[i][j];
+            if (val == target_value) has_element = 1;
 
             //find overlaps
             for (int k = 0; k < num_main; k++) {
@@ -45,30 +45,53 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
                     break;
                 }
             }
+            //cannot use this iteration
+            if (has_overlap == 1) break;
         }
-        //cannot use this iteration
-        if (has_overlap) break;
-
-        //if element can be used)
-        if (has_element && !has_overlap) {
-            //update which one is added and run again to find next one to add
+        //update which one is added and run again to find next one to add
+        if (has_overlap == 0 && has_element == 1){
+            //create new state by copying current one so far
             int next_state[num_main];
             for (int j = 0; j < num_main; j++) {
                 next_state[j] = current_state[j];
             }
+
             //mark the elements in the subset as covered
-            for (int j = 0; j < num_items; j++) {
+            for (int j = 0; subsets[i][j] != -1; j++) {
                 int val = subsets[i][j];
                 for (int k = 0; k < num_main; k++) {
                     if (mainset[k] == val) next_state[k] = 1;
                 }
             }
-
-            int current = 1 + solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets);
-            if (current < best_count) {
-                best_count = current;
+            //temp_solution[i] = 1;
+            int current = solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets, temp_solution);
+            if (current != 9999) {
+                if (1 + current < best_count) {
+                    best_count = 1 + current;
+                    
+                    // Store current index first
+                    current_solution[0] = i; 
+                    // Copy the branch results into the current solution
+                    for (int p = 0; p < current; p++) {
+                        current_solution[p + 1] = temp_solution[p];
+                    }
+                }
             }
+            
+            // if (current < best_count) {
+            //     best_count = current;
+            // }
+            // current_solution[i] = 1; 
+            // for (int j = 0; j < current; j++) {
+            //     current_solution[j] = temp_solution[j];
+            // }
+            // temp_solution[i] = 0;
         }
     }
+    // int checker = 0;
+    // for (int i = 0; i < num_main; i++){
+    //     if (current_state[i] == 0) checker++;
+    // }
+    // if (checker != num_main) return 9999; // no solution
     return best_count;
 }
