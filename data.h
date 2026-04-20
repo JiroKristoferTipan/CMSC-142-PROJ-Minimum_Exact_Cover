@@ -8,6 +8,9 @@
 #define item_count 5                //how many items in each subset
 static int mainset[mainset_count] = {1, 2, 3, 5, 8};
 static int subsets[subset_count][item_count] = {
+    // -1 means end of subset
+    // so basically puro 1-3 members per subset dito
+    // bobo lang ako magcode kaya need nila pareparehas lahat ng length
     {1, 2, -1, 0, 0},
     {3, 5, -1, 0, 0},
     {1, -1, 0, 0, 0},
