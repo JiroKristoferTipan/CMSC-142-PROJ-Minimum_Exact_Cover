@@ -6,9 +6,12 @@ num_items- ilan items meron in each subset
 mainset- array of the main set
 subsets- array of all subsets
 current_solution- indexes of which subsets r used in the solution
+runt_count- how many times we run the function (icocompare natin to with dynamic)
 */
 
-int solve_brute(int current_state[], int num_main, int num_subsets, int num_items, int mainset[], int subsets[num_subsets][num_items], int current_solution[num_subsets]) {
+int solve_brute(int current_state[], int num_main, int num_subsets, int num_items, int mainset[], int subsets[num_subsets][num_items], int current_solution[num_subsets], int* run_count) {
+
+    (*run_count)++;
 
     //check if we did everything
     int total_covered = 0;
@@ -65,7 +68,7 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
             }
             //get another subset to use, and so on until we reach exact cover (yung return 0 sa pinaka top)
             //or if we reach a no solution (best_count is still 9999 and is returned)
-            int current = solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets, temp_solution);
+            int current = solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets, temp_solution, run_count);
             //check if a sol was found
             if (current != 9999) {
                 //check if better than current solution

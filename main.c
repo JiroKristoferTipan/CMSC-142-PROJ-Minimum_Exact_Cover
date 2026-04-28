@@ -12,16 +12,17 @@ int main() {
     selected - checker lang, it should be all 1s if tama
     state - which subsets are selected, 1 if selected, 0 if not
     */
-    int time_bruteforce, time_dynamic, result_brute, result_dynamic; 
+    int time_bruteforce, time_dynamic, result_brute, result_dynamic;
+    int runcount_brute = 0, runcount_dynamic = 0; 
     int bruteforce_selected[mainset_count], bruteforce_state[subset_count], dynamic_selected[mainset_count], dynamic_state[subset_count] = {0};
 
 
     //GET TIME FOR BRUTE FORCE
     time_bruteforce = clock();
-    result_brute = solve_brute(bruteforce_selected, mainset_count, subset_count, item_count, mainset, subsets, bruteforce_state);
+    result_brute = solve_brute(bruteforce_selected, mainset_count, subset_count, item_count, mainset, subsets, bruteforce_state, &runcount_brute);
     time_bruteforce = clock() - time_bruteforce;
     printf("Time taken (brute force): %f seconds\n", ((double)time_bruteforce) / CLOCKS_PER_SEC);
-    print_sol(result_brute, bruteforce_state);
+    print_sol(result_brute, bruteforce_state, runcount_brute);
 
 
     

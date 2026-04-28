@@ -1,5 +1,6 @@
 #ifndef DATA_H
 #define DATA_H
+#include <stdio.h>
 
 //SAMPLE DATA
 //EDIT NALANG TO TEST DIFFERENT CASES
@@ -19,7 +20,7 @@ static int subsets[subset_count][item_count] = {
     {8, -1, 0, 0, 0}
 };
 
-void print_sol(int result, int *state) {
+void print_sol(int result, int *state, int run_count) {
     if (result == 9999) {
         printf("No solution found.\n");
     } else {
@@ -40,6 +41,7 @@ void print_sol(int result, int *state) {
         }
     }
     printf("\n");
+    printf("The function was run %d times to find the solution.\n", run_count);
 }
 
 #endif
