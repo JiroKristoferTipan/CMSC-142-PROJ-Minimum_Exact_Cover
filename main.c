@@ -3,7 +3,7 @@
 #include "data.h"
 #include <stdio.h>
 #include <time.h>
-
+#define MAX_MEMORY 5000
 
 int main() {
     /*
@@ -16,9 +16,9 @@ int main() {
     int runcount_brute = 0, runcount_dynamic = 0; 
     int bruteforce_selected[mainset_count] = {0}, bruteforce_state[subset_count] = {0}, dynamic_selected[mainset_count] = {0}, dynamic_state[subset_count] = {0};
 
-    int max_memo = 5000;
-    int memo_states[5000][mainset_count]; // num_main must be known or use a fixed size
-    int memo_results[5000];
+    //memory stuff ng dynamic, change stuff here if needed (pati rin MAX_MEMORY)
+    int memo_states[MAX_MEMORY][mainset_count];
+    int memo_results[MAX_MEMORY];
     int states_recorded = 0;
     int run_count = 0;
 
@@ -33,7 +33,7 @@ int main() {
     
     //GET TIME FOR DYNAMIC PROGRAMMING
     time_dynamic = clock();
-    result_dynamic = solve_dynamic(dynamic_selected, mainset_count, subset_count, item_count, mainset, subsets, dynamic_state, &runcount_dynamic, memo_states, memo_results, &states_recorded, max_memo);
+    result_dynamic = solve_dynamic(dynamic_selected, mainset_count, subset_count, item_count, mainset, subsets, dynamic_state, &runcount_dynamic, memo_states, memo_results, &states_recorded, MAX_MEMORY);
     time_dynamic = clock() - time_dynamic;
     printf("Time taken (dynamic programming): %f seconds\n", ((double)time_dynamic) / CLOCKS_PER_SEC);
     print_sol(result_dynamic, dynamic_state, runcount_dynamic);
