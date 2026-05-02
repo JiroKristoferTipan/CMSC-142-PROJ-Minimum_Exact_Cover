@@ -14,8 +14,13 @@ int main() {
     */
     int time_bruteforce, time_dynamic, result_brute, result_dynamic;
     int runcount_brute = 0, runcount_dynamic = 0; 
-    int bruteforce_selected[mainset_count], bruteforce_state[subset_count], dynamic_selected[mainset_count], dynamic_state[subset_count] = {0};
+    int bruteforce_selected[mainset_count] = {0}, bruteforce_state[subset_count] = {0}, dynamic_selected[mainset_count] = {0}, dynamic_state[subset_count] = {0};
 
+    int max_memo = 5000;
+    int memo_states[5000][mainset_count]; // num_main must be known or use a fixed size
+    int memo_results[5000];
+    int states_recorded = 0;
+    int run_count = 0;
 
     //GET TIME FOR BRUTE FORCE
     time_bruteforce = clock();
@@ -24,14 +29,14 @@ int main() {
     printf("Time taken (brute force): %f seconds\n", ((double)time_bruteforce) / CLOCKS_PER_SEC);
     print_sol(result_brute, bruteforce_state, runcount_brute);
 
-
+    printf("\n--------------------------------------------------\n\n");
     
     //GET TIME FOR DYNAMIC PROGRAMMING
     time_dynamic = clock();
-    result_dynamic = solve_dynamic(dynamic_state, mainset_count, subset_count, item_count, mainset, subsets, dynamic_selected);
+    result_dynamic = solve_dynamic(dynamic_selected, mainset_count, subset_count, item_count, mainset, subsets, dynamic_state, &runcount_dynamic, memo_states, memo_results, &states_recorded, max_memo);
     time_dynamic = clock() - time_dynamic;
     printf("Time taken (dynamic programming): %f seconds\n", ((double)time_dynamic) / CLOCKS_PER_SEC);
-    // print_sol(result_dynamic, dynamic_state);
+    print_sol(result_dynamic, dynamic_state, runcount_dynamic);
 
     return 0;
 }
