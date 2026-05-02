@@ -35,7 +35,7 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
         int has_element = 0;
         int has_overlap = 0;
         //get a subset that we can use
-        for (int j = 0; j < num_main; j++) {
+        for (int j = 0; j < num_items; j++) {
             //check if it has what were looking for
             int val = subsets[i][j];
             if (val == target_value) has_element = 1;
