@@ -1,3 +1,7 @@
+#ifndef BRUTEFORCE_H
+#define BRUTEFORCE_H
+#include "data.h"
+
 /*
 current_state- array where 1 means elements exists and 0 doesnt, for checking which elements are covered
 num_main- ilan elements sa mainset meron
@@ -32,43 +36,16 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
 
     //try every subset to find what to add next
     for (int i = 0; i < num_subsets; i++) {
-        int has_element = 0;
-        int has_overlap = 0;
-        //get a subset that we can use
-        for (int j = 0; j < num_items; j++) {
-            //check if it has what were looking for
-            int val = subsets[i][j];
-            if (val == target_value) has_element = 1;
-
-            //find overlaps
-            for (int k = 0; k < num_main; k++) {
-                if (mainset[k] == val && current_state[k] == 1) {
-                    has_overlap = 1;
-                    break;
-                }
-            }
-            //cannot use this iteration
-            if (has_overlap == 1) break;
-        }
-        //we found a subset we can use
-        //update which one is added and run again to find next one to add
-        if (has_overlap == 0 && has_element == 1){
+        // We modularized the messy loops here:
+        if (is_valid_subset(subsets[i], current_state, mainset, num_main, num_items, target_value)) {
             //create new state by copying current one so far
             int next_state[num_main];
-            for (int j = 0; j < num_main; j++) {
-                next_state[j] = current_state[j];
-            }
+            get_next_state(next_state, current_state, subsets[i], mainset, num_main, num_items);
 
-            //mark the elements from the new subset as covered
-            for (int j = 0; subsets[i][j] != -1; j++) {
-                int val = subsets[i][j];
-                for (int k = 0; k < num_main; k++) {
-                    if (mainset[k] == val) next_state[k] = 1;
-                }
-            }
             //get another subset to use, and so on until we reach exact cover (yung return 0 sa pinaka top)
             //or if we reach a no solution (best_count is still 9999 and is returned)
             int current = solve_brute(next_state, num_main, num_subsets, num_items, mainset, subsets, temp_solution, run_count);
+
             //check if a sol was found
             if (current != 9999) {
                 //check if better than current solution
@@ -87,3 +64,5 @@ int solve_brute(int current_state[], int num_main, int num_subsets, int num_item
     }
     return best_count;
 }
+
+#endif

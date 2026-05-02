@@ -78,4 +78,47 @@ void print_sol(int result, int *state, int run_count) {
     printf("The function was run %d times to find the solution.\n", run_count);
 }
 
+int is_same_state(int s1[], int s2[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (s1[i] != s2[i]) return 0;
+    }
+    return 1;
+}
+
+//1 if pwede isama yung subset sa sol, 0 if no
+int is_valid_subset(int subset[], int current_state[], int mainset[], int num_main, int num_items, int target_value) {
+    int has_target = 0;
+    //get a subset that we can use
+    for (int j = 0; j < num_items; j++) {
+        int val = subset[j];
+        if (val == -1) break;
+
+        if (val == target_value) has_target = 1;
+
+        //check if may overlap
+        for (int k = 0; k < num_main; k++) {
+            if (mainset[k] == val && current_state[k] == 1) {
+                return 0;
+            }
+        }
+    }
+    return has_target;
+}
+
+//make next state for recursion
+void get_next_state(int next_state[], int current_state[], int subset[], int mainset[], int num_main, int num_items) {
+    //create new state by copying current one so far
+    for (int k = 0; k < num_main; k++) {
+        next_state[k] = current_state[k];
+    }
+    //mark the elements from the new subset as covered
+    for (int j = 0; j < num_items; j++) {
+        int val = subset[j];
+        if (val == -1) break;
+        for (int k = 0; k < num_main; k++) {
+            if (mainset[k] == val) next_state[k] = 1;
+        }
+    }
+}
+
 #endif
