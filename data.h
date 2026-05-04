@@ -1,123 +1,12 @@
 #ifndef DATA_H
 #define DATA_H
 #include <stdio.h>
+#include "test_cases.h"
 
-//SAMPLE DATA
-//EDIT NALANG TO TEST DIFFERENT CASES
-/*
-#define mainset_count 5             //how many elements in main set
-#define subset_count 6              //how many subsets we have
-#define item_count 5                //how many items in each subset
-static int mainset[mainset_count] = {1, 2, 3, 5, 8};
-static int subsets[subset_count][item_count] = {
-    // -1 means end of subset
-    // so basically puro 1-3 members per subset dito
-    // bobo lang ako magcode kaya need nila pareparehas lahat ng length
-    {1, 2, -1, 0, 0},
-    {3, 5, -1, 0, 0},
-    {1, -1, 0, 0, 0},
-    {2, 1, 8, -1, 0},
-    {5, 8, -1, 0, 0},
-    {8, -1, 0, 0, 0}
-};
-*/
+// Change TEST_CASE in test_cases.h to change test case
 
-/*
-#define mainset_count 20            
-#define subset_count 18             
-#define item_count 15               
-
-// A larger main set to increase the number of possible "states"
-static int mainset[mainset_count] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
-
-static int subsets[subset_count][item_count] = {
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, -1, 0, 0, 0, 0},
-    {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, -1, 0, 0, 0, 0},
-    
-    {1, 2, 3, 4, 5, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {6, 7, 8, 9, 10, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {11, 12, 13, 14, 15, -1, 0, 0, 0, 0, 0, 0, 0, 0},
-    {16, 17, 18, 19, 20, -1, 0, 0, 0, 0, 0, 0, 0, 0},
-
-    {1, 6, 11, 16, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {2, 7, 12, 17, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {3, 8, 13, 18, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {4, 9, 14, 19, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {5, 10, 15, 20, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-
-    {1, 3, 5, 7, 9, 11, 13, 15, 17, 19, -1, 0, 0, 0, 0}, 
-    {2, 4, 6, 8, 10, 12, 14, 16, 18, 20, -1, 0, 0, 0, 0},
-    {1, 2, 11, 12, 3, 4, 13, 14, 5, 6, 15, 16, -1, 0, 0},
-    
-    {5, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {10, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {15, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {20, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-};
-*/
-#define mainset_count 100
-#define subset_count 120
-#define item_count 20
-
-int mainset[mainset_count] = {
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
-    21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
-    41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
-    61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
-    81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100
-};
-
-int subsets[subset_count][item_count] = {
-    {1, 2, 3, 4, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {3, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {2, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {5, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {7, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, 5, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {2, 6, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {11, 12, 13, 14, 15, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {16, 17, 18, 19, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {11, 13, 15, 17, 19, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {12, 14, 16, 18, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {21, 23, 25, 27, 29, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {22, 24, 26, 28, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {31, 33, 35, 37, 39, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {32, 34, 36, 38, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {2, 12, 22, 32, 42, 52, 62, 72, 82, 92, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {3, 13, 23, 33, 43, 53, 63, 73, 83, 93, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {4, 14, 24, 34, 44, 54, 64, 74, 84, 94, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {5, 15, 25, 35, 45, 55, 65, 75, 85, 95, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {6, 16, 26, 36, 46, 56, 66, 76, 86, 96, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {7, 17, 27, 37, 47, 57, 67, 77, 87, 97, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {8, 18, 28, 38, 48, 58, 68, 78, 88, 98, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {9, 19, 29, 39, 49, 59, 69, 79, 89, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {10, 20, 30, 40, 50, 60, 70, 80, 90, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {91, 92, 93, 94, 95, 96, 97, 98, 99, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-    {0} 
-};
+static int *mainset = mainset_val;
+static int (*subsets)[item_count] = subsets_val;
 
 void print_sol(int result, int *state, int run_count) {
     if (result == 9999) {
@@ -125,14 +14,11 @@ void print_sol(int result, int *state, int run_count) {
     } else {
         printf("Minimum Subsets Needed: %d\n", result);
         
-        int count = 0;
         for (int i = 0; i < result; i++) {
-            //get the subset index from our result array
             int subset_idx = state[i]; 
-            
             printf("Subset %d contains: ", subset_idx);
             for (int j = 0; j < item_count; j++) {
-                //stop printing if nasa dulo
+                if (subsets[subset_idx][j] <= 0 && subsets[subset_idx][j] != -1) break;
                 if (subsets[subset_idx][j] == -1) break;
                 printf("%d ", subsets[subset_idx][j]);
             }
@@ -150,19 +36,16 @@ int is_same_state(int s1[], int s2[], int n) {
     return 1;
 }
 
-//1 if pwede isama yung subset sa sol, 0 if no
-int is_valid_subset(int subset[], int current_state[], int mainset[], int num_main, int num_items, int target_value) {
+int is_valid_subset(int subset[], int current_state[], int mainset_ref[], int num_main, int num_items, int target_value) {
     int has_target = 0;
-    //get a subset that we can use
     for (int j = 0; j < num_items; j++) {
         int val = subset[j];
-        if (val == -1) break;
+        if (val == -1 || val == 0) break;
 
         if (val == target_value) has_target = 1;
 
-        //check if may overlap
         for (int k = 0; k < num_main; k++) {
-            if (mainset[k] == val && current_state[k] == 1) {
+            if (mainset_ref[k] == val && current_state[k] == 1) {
                 return 0;
             }
         }
@@ -170,18 +53,15 @@ int is_valid_subset(int subset[], int current_state[], int mainset[], int num_ma
     return has_target;
 }
 
-//make next state for recursion
-void get_next_state(int next_state[], int current_state[], int subset[], int mainset[], int num_main, int num_items) {
-    //create new state by copying current one so far
+void get_next_state(int next_state[], int current_state[], int subset[], int mainset_ref[], int num_main, int num_items) {
     for (int k = 0; k < num_main; k++) {
         next_state[k] = current_state[k];
     }
-    //mark the elements from the new subset as covered
     for (int j = 0; j < num_items; j++) {
         int val = subset[j];
-        if (val == -1) break;
+        if (val == -1 || val == 0) break;
         for (int k = 0; k < num_main; k++) {
-            if (mainset[k] == val) next_state[k] = 1;
+            if (mainset_ref[k] == val) next_state[k] = 1;
         }
     }
 }
