@@ -1,12 +1,12 @@
 # CMSC-142-PROJ-Minimum_Exact_Cover
 
-- This code aims to show the difference between algorithm speeds, particularly comparing a brute force method and dynamic method. For this code, we will be using the `Minimum Exact Cover` as the topic to implement.
+- This code aims to show the difference between algorithm speeds, particularly comparing a brute force method, dynamic method, and backtracking method. For this code, we will be using the `Minimum Exact Cover` as the topic to implement.
 
 ## Files
 
 1. main.c
 
-- main function to run, will check the time taken for both brute force and dynamic programming
+- main function to run, will check the time taken for brute force, dynamic programming, and backtracking with branch and bound method on minimum exact cover
 
 2. data.h
 
@@ -22,7 +22,11 @@
 
 5. backtracking.h
 
-- code for backtracking method on minimum exact cover
+- code for backtracking with branch and bound method on minimum exact cover
+
+6. test_cases.h
+
+- contains test cases to run
 
 ## Authors
 
